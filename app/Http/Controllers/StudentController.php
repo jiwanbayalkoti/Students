@@ -1,10 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Student;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -13,7 +10,6 @@ class StudentController extends Controller
     public function index(){
         $students = Student::latest()->paginate(4);
         return view('student.index', compact('students'))->with('i', (request()->input('page',1)-1)*4);
-
     }
     
     public function create(){
@@ -21,7 +17,6 @@ class StudentController extends Controller
     }
 
     public function store(Request $request){
-
         $student = new Student;
         $student->name = $request->input('name');
         $student->email = $request->input('email');
@@ -37,7 +32,7 @@ class StudentController extends Controller
         return redirect()->back()->with('status', 'Student added successfully.');
     }
 
-    public function edit($id){
+      public function edit($id){
         $student = Student::find($id);
         return view('student.edit', compact('student'));
     }
@@ -71,13 +66,11 @@ class StudentController extends Controller
                 file::delete($destination);
             }
             $student->delete();
-        return redirect()->back()->with('status', 'Student Deleted successfully.');
-
+            return redirect()->back()->with('status', 'Student Deleted successfully.');
         }
 
         public function show($id){
             $student = Student::find($id);
-
             return view('student.show', compact('student'));
         }
 }
